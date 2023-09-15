@@ -23,6 +23,11 @@ function App() {
     }
     setPanelDerecho(true);
   };
+  const resetearProducto = () => {
+    setProductosSeleccionados([]);
+    setPanelDerecho(false)
+  };
+
 
   const restarCantidad = (producto) => {
     if (producto.cantidad > 1) {
@@ -46,7 +51,7 @@ function App() {
         <MenuCentral agregarProducto={agregarProducto} />
       </div>
       <div className={`right-panel ${panelDerecho ? 'active' : ''}`}>
-        <MenuDerecho productos={productosSeleccionados} restarCantidad={restarCantidad} />
+        <MenuDerecho productos={productosSeleccionados} restarCantidad={restarCantidad} resetearProducto={resetearProducto} panelDerecho={panelDerecho}/>
       </div>
     </div>
   );

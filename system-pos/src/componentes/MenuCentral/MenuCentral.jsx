@@ -5,6 +5,8 @@ import axios from 'axios';
 function MainContent({ agregarProducto }) {
   const [productosActivos, setProductosActivos] = useState('hamburguesas');
   const [productos, setProductos] = useState([]);
+  const [comidaSeleccionada, setComidaSeleccionada] = useState('Hamburguesas');
+
 
   useEffect(() => {
     const obtenerProductos = async (comida) => {
@@ -28,10 +30,12 @@ function MainContent({ agregarProducto }) {
   const cambiarProductosActivos = (comida) => {
     setProductosActivos(comida.id);
     setProductos([]);
+    setComidaSeleccionada(comida.name);
   };
 
   const seleccionarSubProducto = (producto) => {
-    agregarProducto(producto);
+    const productoConComidaSeleccionada ={...producto, 'tipo': comidaSeleccionada }
+    agregarProducto(productoConComidaSeleccionada);
   };
 
   return (

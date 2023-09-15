@@ -3,8 +3,8 @@ export const Logo = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
-    width="21.934mm"
-    height="25mm"
+    width="35mm"
+    height="35mm"
     style={{
       shapeRendering: "geometricPrecision",
       textRendering: "geometricPrecision",
@@ -35,24 +35,25 @@ export const Logo = (props) => (
   </svg>
 );
 
-export const Line =  (props) => (
+export const Line = (props) => (
   <svg
-    width={275}
+    width={400} // Aumenta el ancho del SVG para que la línea sea más larga
     height={25}
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 250 25"
+    viewBox="0 0 400 25" // Actualiza el viewBox para reflejar el nuevo ancho
     {...props}
   >
     <path
       x1={0}
       y1={10}
-      x2={200}
+      x2={1000} // Extiende el valor x2 para que la línea sea más larga
       y2={10}
       stroke="black"
       strokeDasharray="5,5"
-      d="M0 12.5h250"
+      d="M0 12.5h400" // Actualiza la coordenada 'h' para reflejar el nuevo ancho
       strokeWidth={1.25}
     />
   </svg>
 );
+
 
