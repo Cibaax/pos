@@ -1,0 +1,27 @@
+.producto-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .producto-nombre {
+    flex-grow: 1; /* Permite que el nombre ocupe todo el espacio disponible */
+  }
+  
+  .precio {
+    margin-left: 10px; /* Agrega un margen a la izquierda para separar el precio del nombre */
+  }
+  
+  .svg-logo {
+    width: 100px;
+    height: 100px;
+  }
+  
+@media print {
+    .print-only-button {
+      display: none;
+    }
+  }
+  
+  /* Estilos adicionales si es necesario */
+  
