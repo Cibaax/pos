@@ -6,10 +6,10 @@ const port = 3001;
 
 const pool = new Pool({
   user: 'postgres',
-  host: 'localhost',
-  database: 'c-burger',
-  password: 'cibax',
-  port: 5432,
+  host: 'containers-us-west-155.railway.app',
+  database: 'railway',
+  password: '2IRYZJHl4Ybbvmgae8I9',
+  port: 7532,
 });
 
 app.use(cors({
@@ -22,7 +22,7 @@ pool.on('error', (err) => {
 app.get('/productos/hamburguesas', async (req, res) => {
   try {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM productos.hamburguesas');
+    const result = await client.query('SELECT * FROM hamburguesas');
     client.release();
     res.json(result.rows);
   } catch (error) {
@@ -34,7 +34,7 @@ app.get('/productos/hamburguesas', async (req, res) => {
 app.get('/productos/papas', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT * FROM productos.papas');  
+      const result = await client.query('SELECT * FROM papas');  
       res.json(result.rows);  
       client.release();
     } catch (error) {
@@ -46,7 +46,7 @@ app.get('/productos/papas', async (req, res) => {
   app.get('/productos/bebidas', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT * FROM productos.bebidas');  
+      const result = await client.query('SELECT * FROM bebidas');  
       res.json(result.rows);  
       client.release();
     } catch (error) {
