@@ -42,15 +42,19 @@ function App() {
     }
   };
 
+  const handleDragStart = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <div className="app">
-      <div className="left-sidebar">
+      <div onDragStart={handleDragStart} className="left-sidebar">
         <MenuIzquierdo />
       </div>
-      <div className="main-content">
+      <div onDragStart={handleDragStart} className="main-content">
         <MenuCentral agregarProducto={agregarProducto} />
       </div>
-      <div className={`right-panel ${panelDerecho ? 'active' : ''}`}>
+      <div onDragStart={handleDragStart} className={`right-panel ${panelDerecho ? 'active' : ''}`}>
         <MenuDerecho productos={productosSeleccionados} restarCantidad={restarCantidad} resetearProducto={resetearProducto} panelDerecho={panelDerecho}/>
       </div>
     </div>

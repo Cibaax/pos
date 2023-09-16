@@ -21,7 +21,7 @@ function RightPanel({ productos, restarCantidad, resetearProducto, panelDerecho 
       currency: 'COP',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
-    }).replace(/\s/g, ''); // Elimina los espacios en blanco
+    }).replace(/\s/g, '');
   };
   
   const total = productos.reduce((acc, producto) => {
@@ -31,7 +31,7 @@ function RightPanel({ productos, restarCantidad, resetearProducto, panelDerecho 
     currency: 'COP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).replace(/\s/g, ''); // Elimina los espacios en blanco
+  }).replace(/\s/g, '');
   
 
   if (!panelDerecho) {
@@ -68,7 +68,8 @@ function RightPanel({ productos, restarCantidad, resetearProducto, panelDerecho 
       <div className='images-container'>
         <img src="/qr.svg" alt="qr" className="svg-qr" />
       </div>
-      <div className='images-container'>
+      <Line className="print-only-button active"/>
+      <div className='images-container'>        
       <button onClick={handlePrintAndReset} className="print-only-button active" >Imprimir</button>
       </div>
     </div>

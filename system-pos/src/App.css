@@ -21,8 +21,8 @@
 /*------------------------------------------------------------------------------*/
 
 button {
-  background-color: rgb(255, 255, 255); /* Establece el color de fondo en blanco */
-  border: 0.5px solid rgb(232, 229, 229); /* Establece un borde negro de 1 píxel */
+  background-color: rgb(255, 255, 255);
+  border: 0.5px solid rgb(232, 229, 229);
   color: black;
 }
 .producto-container{
@@ -74,13 +74,20 @@ button {
     transform: translateX(0);
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
   }
-  
+  .images-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
 
   body {
     font-family: 'Roboto', sans-serif;
+    user-select: none;
   }
 
   p{
     font-size: 14px;
   }
+
+  
