@@ -3,7 +3,7 @@ import { useReactToPrint} from 'react-to-print';
 import { Line, Logo, Qr } from '../SVG/SVG';
 import './MenuDerecho.css';
 
-function MenuDerecho({ productos, quitarProducto, resetearProductos, menuDerecho }) {
+function MenuDerecho({ productos, quitarProducto, resetearProductos, menuDerecho, agregarPedido}) {
 
   const referenciarComponente= useRef()
   const fecha = new Date().toLocaleDateString('es-CO');
@@ -14,10 +14,11 @@ function MenuDerecho({ productos, quitarProducto, resetearProductos, menuDerecho
   })
 
   const imprimirResetarProducto = () => {
+    const pedidos = Object.values(productos).map(producto => `${producto.cantidad} ${producto.tipo.slice(0, -1)} ${producto.nombre}`).join(', ');
+    agregarPedido(pedidos);
     imprimir();
     resetearProductos();
   }; 
-
   const formatoMoneda = {
     style: 'currency',
     currency: 'COP',

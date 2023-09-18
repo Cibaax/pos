@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
-  const [pedidoSeleccionado, setPedidoSeleccionado] = useState([])
+  const [pedidos, setPedidos] = useState([]);
   const [menuDerecho, setMenuDerecho] = useState(false);
   const [menuIzquierdo, setMenuIzquierdo] = useState(false);
 
@@ -27,8 +27,7 @@ function App() {
     setProductosSeleccionados([]);
     setMenuDerecho(false);
   };
-  
-  
+    
   const quitarProducto = (producto) => {
     console.log('1caso', producto)
     const productoIndex = productosSeleccionados.findIndex((p) => p === producto);  
@@ -49,16 +48,25 @@ function App() {
     e.preventDefault();
   }
 
+  const agregarPedido = (pedido) => {
+    const copiaPedidos = [...pedidos];
+    // Agregar el nuevo pedido al final del array
+    copiaPedidos.push(pedido);
+    // Actualizar el estado con el nuevo array de pedidos
+    setPedidos(copiaPedidos);
+    setMenuIzquierdo(true)
+    };
+
   return (
     <div className="app">
       <div onDragStart={handleDragStart} className={`menu-izquierdo ${menuIzquierdo ? 'activo' : ''}`}>
-        <MenuIzquierdo pedido={pedidoSeleccionado}/>
+        <MenuIzquierdo pedido={pedidos}/>
       </div>
       <div onDragStart={handleDragStart} className="menu-central">
         <MenuCentral agregarProducto={agregarProducto}/>
       </div>
       <div onDragStart={handleDragStart} className={`menu-derecho ${menuDerecho ? 'activo' : ''}`}>
-        <MenuDerecho productos={productosSeleccionados} quitarProducto={quitarProducto} resetearProductos={resetearProductos} menuDerecho={menuDerecho} />
+        <MenuDerecho productos={productosSeleccionados} quitarProducto={quitarProducto} resetearProductos={resetearProductos} menuDerecho={menuDerecho} agregarPedido={agregarPedido} />
       </div>
     </div>
   );

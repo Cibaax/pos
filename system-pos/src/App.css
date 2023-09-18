@@ -110,3 +110,9 @@ button.activo {
     display: none;
   }
 }
+
+.prueba{
+  background-color: rgb(224, 127, 9);
+  width: auto;
+  height: auto;
+}
