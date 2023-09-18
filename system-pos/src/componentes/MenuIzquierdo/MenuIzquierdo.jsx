@@ -1,12 +1,23 @@
 // LeftSidebar.js
 import React from 'react';
 
-function LeftSideBar() {
+function MenuIzquierdo({pedido}) {
   return (
     <div className="left-sidebar">
-      {/* Contenido de la barra lateral */}
+      {pedido.map((pedido, index) => (
+      <div key={index} className="contenedor-producto">
+        <div className="justificar-centro">
+          <p className="t16">{pedido.cantidad}</p>
+        </div>
+        <div>
+          <p>
+          {pedido.tipo.slice(0, -1)} {pedido.nombre}
+          </p>
+        </div>
+      </div>
+      ))}
     </div>
   );
 }
 
-export default LeftSideBar;
+export default MenuIzquierdo;

@@ -1,83 +1,91 @@
-import './MenuDerecho.css';
 import React, { useRef } from 'react';
 import { useReactToPrint} from 'react-to-print';
-import { Line, Logo } from '../SVG/SVG';
-function RightPanel({ productos, restarCantidad, resetearProducto, panelDerecho }) {
-  const componentRef= useRef()
+import { Line, Logo, Qr } from '../SVG/SVG';
+import './MenuDerecho.css';
 
-  const handlePrint = useReactToPrint({
-    content: ()=>componentRef.current,
+function MenuDerecho({ productos, quitarProducto, resetearProductos, menuDerecho }) {
+
+  const referenciarComponente= useRef()
+  const fecha = new Date().toLocaleDateString('es-CO');
+  const hora = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+
+  const imprimir = useReactToPrint({
+    content: ()=>referenciarComponente.current,
   })
 
-  const handlePrintAndReset = () => {
-    handlePrint();
-    resetearProducto();
+  const imprimirResetarProducto = () => {
+    imprimir();
+    resetearProductos();
   }; 
 
-  const calcularSubtotal = (producto) => {
-    const subtotal = producto.valor * producto.cantidad;
-    return subtotal.toLocaleString('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).replace(/\s/g, '');
-  };
-  
-  const total = productos.reduce((acc, producto) => {
-    return acc + producto.valor * producto.cantidad;
-  }, 0).toLocaleString('es-CO', {
+  const formatoMoneda = {
     style: 'currency',
     currency: 'COP',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).replace(/\s/g, '');
+  };
   
+  const calcularSubtotal = ({ valor, cantidad }) => {
+    const subtotal = valor * cantidad;
+    return subtotal.toLocaleString('es-CO', formatoMoneda).replace(/\s/g, '');
+  };
+  
+  
+  const total = productos.reduce((acc, producto) => {
+    return acc + producto.valor * producto.cantidad;
+  }, 0).toLocaleString('es-CO', formatoMoneda).replace(/\s/g, '');
 
-  if (!panelDerecho) {
+  if (!menuDerecho) {
     return null;
-  }
+  }    
 
   return (
-    <div ref={componentRef} style={{width: '100%'}} className="right-panel-content">
-      <div className='images-container'>
+    <div ref={referenciarComponente} className="menu-derecho-contenedor">
+      <div className='justificar-centro'>
+        <button onClick={resetearProductos} className='no-imprimir menos p0'>x</button>
+      </div>
+      <div className="justificar-extremo f16">
+        <p>{fecha}</p>
+        <p>{hora}</p>
+      </div>
+      <div className='justificar-centro'>
        <Logo />  
       </div>
       <Line/>
       {productos.map((producto, index) => (
-  <div key={index} className="producto-container">
-    <div className="cantidad-container">
-      <button className="print-only-button menos" onClick={() => restarCantidad(producto)} >- </button>
-      <p className="producto-cantidad">{producto.cantidad}</p>
-    </div>
-    <div className="producto-info">
-      <p className="producto-nombre">
-        {producto.tipo.slice(0, -1)} {producto.nombre}
-      </p>
-    </div>
-      <div  className="precio">{calcularSubtotal(producto)}</div>
-  </div>
-))}
+      <div key={index} className="contenedor-producto">
+        <div className="justificar-centro">
+          <button className="no-imprimir p0 menos" onClick={() => quitarProducto(producto)} >- </button>
+          <p className="t16">{producto.cantidad}</p>
+        </div>
+        <div>
+          <p>
+          {producto.tipo.slice(0, -1)} {producto.nombre}
+          </p>
+        </div>
+        <div className="precio">{calcularSubtotal(producto)}</div>
+      </div>
+      ))}
       <Line/>
-      <div className="producto-container">
+      <div className="contenedor-producto">
         <div></div>
-        <p className="producto-nombre">Total:</p>
-        <div className="precio">{total}</div>
+        <p>Total:</p>
+        <div>{total}</div>
       </div>
       <Line/>
-      <div className='images-container'>
-        <img src="/qr.svg" alt="qr" className="svg-qr" />
+      <div className='justificar-centro'>
+        <Qr/>
       </div>
-      <Line className="print-only-button active"/>
-      <div className='images-container'>        
-      <button onClick={handlePrintAndReset} className="print-only-button active" >Imprimir</button>
+      <div className="espacio-blanco"></div>
+      <Line/>
+      <div className='justificar-centro'>        
+        <button onClick={imprimirResetarProducto} className="no-imprimir activo" >Imprimir</button>
       </div>
     </div>
   );
 }
 
-
-export default RightPanel;
+export default MenuDerecho;
 
 
 

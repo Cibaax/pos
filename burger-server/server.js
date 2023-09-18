@@ -55,6 +55,22 @@ app.get('/productos/papas', async (req, res) => {
     }
   });
 
+  app.post('/crear-pedido', async (req, res) => {
+    try {
+      const { sencilla,doble, valor, fecha, cocacola } = req.body; // Asegúrate de ajustar esto a la estructura de tu pedido.
+      
+      const client = await pool.connect();
+      const result = await client.query('INSERT INTO pedidos (sencilla, doble, valor, fecha, cocacola) VALUES ($1, $2, $3, $4, $5)', [sencilla, doble, valor, fecha, cocacola]);
+      client.release();
+  
+      res.status(201).json({ message: 'Pedido creado exitosamente' });
+    } catch (error) {
+      console.error('Error al crear el pedido:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  });
+  
+
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
 });

@@ -1,26 +1,14 @@
-.producto-container {
-    display: flex;
-    height: auto;
-    align-items: center;
-    width: 100%;
-  }
+.contenedor-producto {
+  position: relative;
+  height: 35px;
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+  grid-template-columns: 10% 65% 30%;  
+  top: -10px;
+}  
+
   
   
-@media print {
-    .print-only-button {
-      display: none;
-    }
-  }
-  .menos{
-    padding: 0;
-  }
   
-  .cantidad-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .producto-cantidad {
-    margin: 0;
-    font-size: 16px;
-  }
+      

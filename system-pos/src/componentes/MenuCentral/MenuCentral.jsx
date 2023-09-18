@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './MenuCentral.css';
 import axios from 'axios';
+import './MenuCentral.css';
 
-function MenuCentral({ agregarProducto }) {
+function MenuCentral({ agregarProducto}) {
   const [productosActivos, setProductosActivos] = useState('hamburguesas');
   const [productos, setProductos] = useState([]);
   const [comidaSeleccionada, setComidaSeleccionada] = useState('Hamburguesas');
+  const [pedido, setPedido] = useState([])
 
-  const calcularSubtotal = (producto) => {
+  const valorProducto = (producto) => {
     const subtotal = Number(producto.valor);
     return subtotal.toLocaleString('es-CO', {
       style: 'currency',
@@ -23,41 +24,36 @@ function MenuCentral({ agregarProducto }) {
         const respuesta = await axios.get(`http://localhost:3001/productos/${comida}`);
         setProductos(respuesta.data);
       } catch (error) {
-        console.error(`Error al obtener los productos de ${comida.name}:`, error);
+        console.error(`Error al obtener los productos de ${comida.nombre}:`, error);
       }
     };
-
     obtenerProductos(productosActivos);
   }, [productosActivos]);
 
   const comidas = [
-    { id: 'hamburguesas', name: 'Hamburguesas' },
-    { id: 'papas', name: 'Papas' },
-    { id: 'bebidas', name: 'Bebidas' },
+    { id: 'hamburguesas', nombre: 'Hamburguesas' },
+    { id: 'papas', nombre: 'Papas' },
+    { id: 'bebidas', nombre: 'Bebidas' },
   ];
 
-  const cambiarProductosActivos = (comida) => {
-    setProductosActivos(comida.id);
+  const cambiarProductosActivos = ({id, nombre}) => {
+    setProductosActivos(id);
     setProductos([]);
-    setComidaSeleccionada(comida.name);
+    setComidaSeleccionada(nombre);
   };
 
-  const seleccionarSubProducto = (producto) => {
-    const productoConComidaSeleccionada ={...producto, 'tipo': comidaSeleccionada }
-    agregarProducto(productoConComidaSeleccionada);
-  };
-  console.log(productos)
+  const seleccionarSubProducto = (producto) => agregarProducto({ ...producto, 'tipo': comidaSeleccionada });
 
   return (
-    <div className="main-content">
+    <div className="menu-central-contenedor">
       <div className="category-navigation">
         {comidas.map((comida) => (
           <button
             key={comida.id}
-            className={comida.id === productosActivos ? 'active' : ''}
+            className={comida.id === productosActivos ? 'activo' : ''}
             onClick={() => cambiarProductosActivos(comida)}
           >
-            {comida.name}
+            {comida.nombre}
           </button>
         ))}
       </div>
@@ -69,8 +65,8 @@ function MenuCentral({ agregarProducto }) {
             </div>
             <div className="text-container">
               <h3>{producto.nombre}</h3>
-              <p>{calcularSubtotal(producto)}</p>
-              <button className='active' onClick={() => seleccionarSubProducto(producto)}>agregar</button>
+              <p>{valorProducto(producto)}</p>
+              <button className='activo' onClick={() => seleccionarSubProducto(producto)}>agregar</button>
             </div>
           </div>
         ))}

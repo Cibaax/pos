@@ -7,40 +7,43 @@ import './App.css';
 
 function App() {
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
-  const [panelDerecho, setPanelDerecho] = useState(false);
+  const [pedidoSeleccionado, setPedidoSeleccionado] = useState([])
+  const [menuDerecho, setMenuDerecho] = useState(false);
+  const [menuIzquierdo, setMenuIzquierdo] = useState(false);
 
   const agregarProducto = (producto) => {
-    const productoExistente = productosSeleccionados.find(
-      (p) => p.nombre === producto.nombre
-    );
-
-    if (productoExistente) {
-      productoExistente.cantidad += 1;
-      setProductosSeleccionados([...productosSeleccionados]);
+    const productoIndex = productosSeleccionados.findIndex((p) => p.nombre === producto.nombre);
+    if (productoIndex !== -1) {
+      productosSeleccionados[productoIndex].cantidad += 1;
     } else {
       producto.cantidad = 1;
-      setProductosSeleccionados([...productosSeleccionados, producto]);
-    }
-    setPanelDerecho(true);
+      productosSeleccionados.push(producto);
+    }  
+    setProductosSeleccionados([...productosSeleccionados]);
+    setMenuDerecho(true);
   };
-  const resetearProducto = () => {
+  
+  const resetearProductos = () => {
     setProductosSeleccionados([]);
-    setPanelDerecho(false)
+    setMenuDerecho(false);
   };
-
-
-  const restarCantidad = (producto) => {
-    if (producto.cantidad > 1) {
-      producto.cantidad -= 1;
-      setProductosSeleccionados([...productosSeleccionados]);
-    } else {
-      const nuevosProductos = productosSeleccionados.filter((p) => p !== producto);
-      setProductosSeleccionados(nuevosProductos);
-      if (nuevosProductos.length === 0) {
-        setPanelDerecho(false);
+  
+  
+  const quitarProducto = (producto) => {
+    console.log('1caso', producto)
+    const productoIndex = productosSeleccionados.findIndex((p) => p === producto);  
+    if (productoIndex !== -1) {
+      if (producto.cantidad > 1) {
+        productosSeleccionados[productoIndex].cantidad -= 1;
+      } else {
+        productosSeleccionados.splice(productoIndex, 1);
+        if (productosSeleccionados.length === 0) {
+          setMenuDerecho(false);
+        }
       }
+      setProductosSeleccionados([...productosSeleccionados]);
     }
-  };
+  };  
 
   const handleDragStart = (e) => {
     e.preventDefault();
@@ -48,14 +51,14 @@ function App() {
 
   return (
     <div className="app">
-      <div onDragStart={handleDragStart} className="left-sidebar">
-        <MenuIzquierdo />
+      <div onDragStart={handleDragStart} className={`menu-izquierdo ${menuIzquierdo ? 'activo' : ''}`}>
+        <MenuIzquierdo pedido={pedidoSeleccionado}/>
       </div>
-      <div onDragStart={handleDragStart} className="main-content">
-        <MenuCentral agregarProducto={agregarProducto} />
+      <div onDragStart={handleDragStart} className="menu-central">
+        <MenuCentral agregarProducto={agregarProducto}/>
       </div>
-      <div onDragStart={handleDragStart} className={`right-panel ${panelDerecho ? 'active' : ''}`}>
-        <MenuDerecho productos={productosSeleccionados} restarCantidad={restarCantidad} resetearProducto={resetearProducto} panelDerecho={panelDerecho}/>
+      <div onDragStart={handleDragStart} className={`menu-derecho ${menuDerecho ? 'activo' : ''}`}>
+        <MenuDerecho productos={productosSeleccionados} quitarProducto={quitarProducto} resetearProductos={resetearProductos} menuDerecho={menuDerecho} />
       </div>
     </div>
   );
