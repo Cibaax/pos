@@ -8,7 +8,37 @@
   top: -10px;
 }  
 
-  
-  
+.producto-con-opciones {
+  margin-bottom: 10px;
+}
+
+.contenedor-productos-seleccionados p {
+  margin: 4px 0;
+}
+
+.opciones-container {
+  display: none;
+  transition: transform 0.3s ease; /* Agrega una transición para suavizar la animación */
+  transform: translateX(100%); /* Despliega el menú hacia la derecha al 100% de su ancho */
+}
+
+.opciones-container.mostrar {
+  display: block;
+  transform: translateX(0); /* Vuelve a la posición original (visible) */
+}
+
+
+/* Agrega este estilo a tu archivo CSS */
+.flecha-boton::before {
+  content: "→"; /* Puedes usar la entidad HTML correspondiente para una flecha hacia la derecha si lo prefieres (&rarr;) */
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.flecha-boton.mostrar::before {
+  transform: rotate(180deg); /* Rota la flecha hacia la izquierda cuando los ingredientes estén visibles */
+}
+
   
       

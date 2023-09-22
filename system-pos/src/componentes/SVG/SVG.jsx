@@ -80,10 +80,10 @@ export const Logo = (props) => (
 
 export const Line = (props) => (
   <svg
-    width={400} // Aumenta el ancho del SVG para que la línea sea más larga
+    width={360} // Aumenta el ancho del SVG para que la línea sea más larga
     height={25}
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 400 25" // Actualiza el viewBox para reflejar el nuevo ancho
+    viewBox="0 0 360 25" // Actualiza el viewBox para reflejar el nuevo ancho
     {...props}
   >
     <path

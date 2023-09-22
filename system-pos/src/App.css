@@ -12,10 +12,11 @@ body {
 }
   
 .menu-izquierdo {
+  height: fit-content;
   margin-top: 50px;
   width: 0;
   padding: 10px;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: width 0.3s ease, transform 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -23,7 +24,7 @@ body {
 }
 
 .menu-izquierdo.activo {
-  width: 30%;
+  width: 27%;
   transform: translateX(0);
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
 }
@@ -34,6 +35,9 @@ body {
 }
 
   .menu-derecho {
+    height: fit-content;
+    position: relative;
+    right: 14px;
     margin-top: 50px;
     width: 0;
     padding: 10px;
@@ -50,16 +54,30 @@ body {
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
   }
 
+  
+
+
 /*------------------------------------------------------------------------------*/
 
 button {
-  background-color: rgb(255, 255, 255);
-  border: 0.5px solid rgb(232, 229, 229);
+background-color: transparent;  
+border: 0.5px solid rgb(232, 229, 229);
   color: black;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 20px;
 }
+
+button:hover{
+  background-color: #66cccc;
+  color: white;
+}
+
+.noHover:hover {
+  background-color: initial; 
+  color: #63aca4;
+}
+
 
 button.menos {
   color: #63aca4; 
@@ -88,6 +106,17 @@ button.activo {
   display: flex;
   justify-content: end;
 }
+
+.justificar-inicio{
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.justificar-espacio-alrededor{
+  display: flex;
+  justify-content: space-around;
+}
+
 .p0{
   padding: 0;
 }
@@ -99,6 +128,11 @@ button.activo {
 .t16{
   font-size: 16px;
 }
+
+.p-small{
+  font-size: 10px;
+}
+
 
 .espacio-blanco {
   height: 60px;
@@ -115,4 +149,38 @@ button.activo {
   background-color: rgb(224, 127, 9);
   width: auto;
   height: auto;
+}
+
+img{
+  height: auto;
+  width: 200px;
+}
+
+
+
+/* ----------------------------------------------------------------- */
+/* MenuCentral.css */
+
+/* Agrega estilos personalizados para los checkboxes */
+.checkbox-input {
+  /* Estilos para el checkbox en sí */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 0.5px solid rgb(232, 229, 229);
+    border-radius: 3px; /* Bordes redondeados */
+  outline: none;
+  margin-right: 8px; /* Espacio a la derecha del checkbox */
+  cursor: pointer;
+}
+.checkbox-input:checked {
+  background-color: #66cccc; /* Fondo cuando está marcado */
+  border: none
+}
+.checkbox-input:hover {
+  background-color: #66cccc; /* Cambio de color al pasar el cursor */
+  border: 0.5px solid rgb(232, 229, 229);
+
 }
