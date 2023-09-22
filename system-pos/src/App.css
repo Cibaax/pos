@@ -133,6 +133,9 @@ button.activo {
   font-size: 10px;
 }
 
+.w50{
+  width: 50%;
+}
 
 .espacio-blanco {
   height: 60px;
@@ -185,28 +188,3 @@ img{
 
 }
 
-
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('4', 'Papas', 'Sencillas', NULL, '8000', 'https://i.postimg.cc/tCMR7DJF/fries.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('3', 'Papas', 'Dobles', NULL, '4000', 'https://i.postimg.cc/tCMR7DJF/fries.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('5', 'Papas', 'Supremas', NULL, '12000', 'https://i.postimg.cc/tCMR7DJF/fries.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('1', 'Hamburguesas', 'Sencillas', NULL, '10000', 'https://i.postimg.cc/x1cvyc9S/burger-simple.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('2', 'Hamburguesas', 'Dobles', NULL, '16000', 'https://i.postimg.cc/Bn7GkwWK/burger-double.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('6', 'Bebidas', 'CocaCola', NULL, '3000', 'https://i.postimg.cc/76q3Wqg1/cocacola.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('7', 'Bebidas', 'Sprite', NULL, '3000', 'https://i.postimg.cc/pV4992p0/sprite.png');
-INSERT INTO public.productos
-(id, categoria, nombre, ingredientes, valor, imagen)
-VALUES('8', 'Bebidas', 'Quatro', NULL, '3000', 'https://i.postimg.cc/5yLC300S/quatro.png');
