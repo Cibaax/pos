@@ -90,7 +90,7 @@ function MenuCentral({ agregarProductos }) {
               </div>
               {categoriaSeleccionada === 'Hamburguesas' && ingredientes[producto.id] && (
                 <div className={`opciones-container mostrar`}>
-                  {['Sal', 'Lec', 'Tom', 'Ceb', 'Que', 'Toc'].map(opcion => (
+                  {['Sals', 'Lech', 'Toma', 'Cebo', 'Ques', 'Toci'].map(opcion => (
                     <div key={opcion} className='justificar-inicio'>
                       <input
                         className="checkbox-input"

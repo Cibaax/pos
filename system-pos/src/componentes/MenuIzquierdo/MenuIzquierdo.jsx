@@ -17,7 +17,7 @@ function MenuIzquierdo({ pedidos, menuIzquierdo, eliminarPedido }) {
       <h2 className='w50'>Pedidos:</h2>
       <h2 className='w50'>Sin:</h2>
       </div>
-      <Line />
+      
       {pedidos.map((pedido, index) => (
         <div key={index}>
           {pedido.map((pedido, subIndex) => (
@@ -27,9 +27,13 @@ function MenuIzquierdo({ pedidos, menuIzquierdo, eliminarPedido }) {
             </div>
           ))}
           <button onClick={() => handleEliminarPedido(index)}>Eliminar</button>
+          <div>
+            <Line />
+          </div>
         </div>
+          
       ))}
-          <Line />
+      <div className='espacio-blanco'></div>
     </div>
   );
 }

@@ -16,10 +16,42 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
     content: ()=>referenciarComponente.current,
   })
 
-  const imprimirResetarProducto = () => {
+  const imprimirResetarProducto = async () => {
      
     const pedidos = productosSeleccionados.map(producto => (`${producto.cantidad} ${producto.cantidad > 1 ? producto.categoria : producto.categoria.slice(0, -1)} ${producto.categoria === "Bebidas" ? producto.nombre : producto.cantidad > 1 ? producto.nombre : producto.nombre.slice(0, -1)} ${producto.opciones.length ? 'sin: ' : ''}${producto.opciones.join(' ')}`
-    ));
+    
+    
+    ));const objetoProductos = {
+      productos: productosSeleccionados
+    };
+    console.log(objetoProductos, 'asdsd')
+    try {
+      // Convierte objetoProductos a una cadena JSON
+      const requestBody = JSON.stringify(objetoProductos);
+    
+      // Enviar los datos al servidor
+      const response = await fetch('/pedidos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: requestBody // Envía la cadena JSON en el cuerpo de la solicitud
+      });
+    
+      if (response.status === 201) {
+        // Éxito al enviar el pedido al servidor
+        const data = await response.json();
+        console.log('Pedido creado con ID:', data.id);
+      } else {
+        console.error('Error en la solicitud al servidor:', response.status);
+      }
+    } catch (error) {
+      console.error('Error interno del cliente:', error);
+    }
+    
+
+
+
     agregarPedido(pedidos);
     imprimir();
     resetearProductos();
