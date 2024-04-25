@@ -1,14 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useReactToPrint} from 'react-to-print';
-import { Line, Logo, Qr } from '../SVG/SVG';
+import { Line, Logo, Whatsapp, Address} from '../SVG/SVG';
 import './MenuDerecho.css';
 import { calcularSubtotal, total } from '../Otros/Otros';
 
-function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos, menuDerecho, agregarPedido}) {
-
+function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos, menuDerecho}) {
   
   const referenciarComponente= useRef()
-
   const fecha = new Date().toLocaleDateString('es-CO');
   const hora = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
 
@@ -17,45 +15,42 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
   })
 
   const imprimirResetarProducto = async () => {
-     
-    const pedidos = productosSeleccionados.map(producto => (`${producto.cantidad} ${producto.cantidad > 1 ? producto.categoria : producto.categoria.slice(0, -1)} ${producto.categoria === "Bebidas" ? producto.nombre : producto.cantidad > 1 ? producto.nombre : producto.nombre.slice(0, -1)} ${producto.opciones.length ? 'sin: ' : ''}${producto.opciones.join(' ')}`
-    
-    
-    ));const objetoProductos = {
-      productos: productosSeleccionados
+    const pedido = {
+      valor_total: total({productosSeleccionados}).slice(1).replace(/\./g, ""),
+      fecha: new Date().toISOString(),
+      productos: productosSeleccionados.map(producto => ({
+        nombre_producto: producto.nombre,
+        cantidad: producto.cantidad,
+        valor_unitario: producto.valor,
+        valor_total_producto: calcularSubtotal(producto).slice(1).replace(/\./g, ""),
+        descripcion: producto.descripcion
+      }))
     };
-    console.log(objetoProductos, 'asdsd')
     try {
-      // Convierte objetoProductos a una cadena JSON
-      const requestBody = JSON.stringify(objetoProductos);
-    
-      // Enviar los datos al servidor
-      const response = await fetch('/pedidos', {
+      const response = await fetch('http://localhost:3001/pedidos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: requestBody // Envía la cadena JSON en el cuerpo de la solicitud
+        body: JSON.stringify(pedido)
       });
-    
+  
       if (response.status === 201) {
-        // Éxito al enviar el pedido al servidor
         const data = await response.json();
-        console.log('Pedido creado con ID:', data.id);
+        console.log('Pedido creado con ID:', data.id);  
+        imprimir();
+        resetearProductos();
+  
       } else {
         console.error('Error en la solicitud al servidor:', response.status);
       }
     } catch (error) {
       console.error('Error interno del cliente:', error);
     }
-    
-
-
-
-    agregarPedido(pedidos);
-    imprimir();
-    resetearProductos();
   };
+  
+  
+  
   
 
   if (!menuDerecho) {
@@ -76,7 +71,7 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
       </div>
       <Line/>
       {productosSeleccionados.map((producto, index) => (
-      <div key={index} className={`contenedor-producto ${producto.opciones.length > 0 ? 'producto-con-opciones' : ''}`}>
+      <div key={index} className={`contenedor-producto`}>
         <div className="justificar-centro">
           <button className="no-imprimir p0 menos noHover" onClick={() => quitarProducto(producto.id)} >- </button>
           <p className="t16">{producto.cantidad}</p>
@@ -85,7 +80,6 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
           <p>
             {producto.cantidad > 1 ? producto.categoria : producto.categoria.slice(0, -1)} {producto.categoria === "Bebidas" ? producto.nombre : producto.cantidad > 1 ? producto.nombre : producto.nombre.slice(0, -1)}
           </p>
-          <p className="p-small">{producto.opciones.length > 0 ? `Sin: ${producto.opciones.join(' ')}` : null}</p>
         </div>
         <div className="precio">{calcularSubtotal(producto)}</div>          
       </div>
@@ -98,7 +92,10 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
       </div>      
       <Line/>
       <div className='justificar-centro'>
-        <Qr/>
+      <Whatsapp/> 3233113227
+      </div>
+      <div className='justificar-centro'>
+      <Address/> Manzana B Casa 5 Quito Lopez III
       </div>
       <div className="espacio-blanco"></div>
       <Line/>

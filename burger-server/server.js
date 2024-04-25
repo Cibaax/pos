@@ -33,21 +33,25 @@ const port = 3001;
 
   app.post('/pedidos', async (req, res) => {
     try {
-      const { cantidad, categoria, nombre, valor } = req.body;
-      const { rows } = await pool.query('INSERT INTO public.pedidos (cantidad, categoria, nombre, valor, fecha) VALUES ($1, $2, $3, $4, NOW()) RETURNING id;', [cantidad, categoria, nombre, valor]);
-      res.status(201).json({ message: 'Pedido creado', id: rows[0].id });
+      const { valor_total, fecha, productos } = req.body;
+  
+      // Insertar el pedido en la tabla 'pedidos'
+      const { rows: pedidoRows } = await pool.query('INSERT INTO public.pedidos (valor_total, fecha) VALUES ($1, $2) RETURNING id;', [valor_total, fecha]);
+      const pedidoId = pedidoRows[0].id;
+  
+      // Insertar los productos asociados al pedido en la tabla 'pedidos_productos'
+      for (const producto of productos) {
+        const { nombre_producto, cantidad, valor_unitario, valor_total_producto, descripcion } = producto;
+        await pool.query('INSERT INTO public.pedidos_productos (pedido_id, nombre_producto, cantidad, valor_unitario, valor_total_producto, descripcion) VALUES ($1, $2, $3, $4, $5, $6);', [pedidoId, nombre_producto, cantidad, valor_unitario, valor_total_producto, descripcion]);
+      }
+  
+      res.status(201).json({ message: 'Pedido creado', id: pedidoId });
     } catch (e) {
       console.error('Error:', e);
       res.status(500).json({ error: 'Error interno del servidor' });
     }
   });
   
-  
-  
-  
-  
-  
-
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);

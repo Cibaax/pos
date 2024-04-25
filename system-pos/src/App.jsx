@@ -19,7 +19,6 @@ function App() {
           return {
             ...p,
             cantidad: p.cantidad + 1,
-            opciones: [...p.opciones, ...producto.opciones],
           };
         }
         return p;
@@ -59,15 +58,6 @@ function App() {
     setPedidos(copiaPedidos);
     setMenuIzquierdo(true)
     };
-  
-    const eliminarPedido = (index) => {
-      const copiaPedidos = [...pedidos];
-      copiaPedidos.splice(index, 1);
-      setPedidos(copiaPedidos);
-      if (copiaPedidos.length === 0) {
-        setMenuIzquierdo(false);
-      }
-    };
 
   const handleDragStart = (e) => {
     e.preventDefault();
@@ -76,7 +66,7 @@ function App() {
   return (
     <div className="app">
       <div onDragStart={handleDragStart} className={`menu-izquierdo ${menuIzquierdo ? 'activo' : ''}`}>
-        <MenuIzquierdo pedidos={pedidos} menuIzquierdo={menuIzquierdo} eliminarPedido={eliminarPedido}/>
+        <MenuIzquierdo menuIzquierdo={menuIzquierdo} />
       </div>
       <div onDragStart={handleDragStart} className="menu-central">
         <MenuCentral agregarProductos={agregarProductos} />
