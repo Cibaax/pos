@@ -146,6 +146,9 @@ button.activo {
   .no-imprimir {
     display: none;
   }
+  .input-oculto {
+    display: none;
+  }
 }
 
 .prueba{

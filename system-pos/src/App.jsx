@@ -52,6 +52,8 @@ function App() {
     setMenuDerecho(false);
   };
 
+  
+
   const agregarPedido = (pedido) => {
     const copiaPedidos = [...pedidos];
     copiaPedidos.push(pedido);
