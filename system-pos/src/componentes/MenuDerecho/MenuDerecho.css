@@ -17,6 +17,15 @@
 .span{
   display: flex ;  
   align-items: center;
+  
+}
+
+.m5{
+  margin: 5px;
+}
+
+.m10{
+  margin-bottom: 10px;
 }
 
 

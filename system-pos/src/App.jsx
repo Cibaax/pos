@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MenuIzquierdo from './componentes/MenuIzquierdo/MenuIzquierdo';
 import MenuCentral from './componentes/MenuCentral/MenuCentral';
 import MenuDerecho from './componentes/MenuDerecho/MenuDerecho';
@@ -7,8 +7,16 @@ import './App.css';
 function App() {
   const [productosSeleccionados, setProductosSeleccionados] = useState([]);
   const [menuDerecho, setMenuDerecho] = useState(false);
-  const [menuIzquierdo, setMenuIzquierdo] = useState(false);
+  const [menuIzquierdo, setMenuIzquierdo] = useState(true);
   const [pedidos, setPedidos] = useState([]);
+  
+  useEffect(() => {
+    // Aquí puedes realizar una solicitud a tu servidor para obtener la lista de pedidos
+    fetch('http://localhost:3001/pedidos')
+      .then(response => response.json())
+      .then(data => setPedidos(data))
+      .catch(error => console.error('Error al obtener pedidos:', error));
+  }, []);
 
   const agregarProductos = (producto) => {
     const productoExistente = productosSeleccionados.find((p) => p.id === producto.id);
@@ -68,7 +76,7 @@ function App() {
   return (
     <div className="app">
       <div onDragStart={handleDragStart} className={`menu-izquierdo ${menuIzquierdo ? 'activo' : ''}`}>
-        <MenuIzquierdo menuIzquierdo={menuIzquierdo} />
+      <MenuIzquierdo menuIzquierdo={menuIzquierdo} pedidos={pedidos} />
       </div>
       <div onDragStart={handleDragStart} className="menu-central">
         <MenuCentral agregarProductos={agregarProductos} />

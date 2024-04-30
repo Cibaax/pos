@@ -20,15 +20,15 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
   const imprimirResetarProducto = async () => {
     const pedido = {
       valor_total: total({ productosSeleccionados }).slice(1).replace(/\./g, ""),
-      fecha: new Date().toISOString(),
       productos: productosSeleccionados.map(producto => ({
-        nombre_producto: producto.nombre,
+        nombre_producto: (producto.cantidad > 1 ? producto.categoria : producto.categoria.slice(0, -1)) + ' ' + (producto.cantidad > 1 ? producto.nombre : producto.nombre.slice(0, -1)),
         cantidad: producto.cantidad,
         valor_unitario: producto.valor,
         valor_total_producto: calcularSubtotal(producto).slice(1).replace(/\./g, ""),
         descripcion: producto.descripcion
       }))
     };
+    console.log(pedido)
     try {
       const response = await fetch('http://localhost:3001/pedidos', {
         method: 'POST',
@@ -68,10 +68,10 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
     return null;
   }
 
-  return (
+  return (  
     <div ref={referenciarComponente} className="menu-derecho-contenedor">
       <div className='justificar-centro'>
-        <button onClick={resetearProductos} className='no-imprimir menos p0'>x</button>
+      <button onClick={() => { resetearProductos(); setLlevar(true); setServirse(false); }} className='no-imprimir menos p0'>x</button>
       </div>
       <div className="justificar-extremo f16">
         <p>{fecha}</p>
@@ -80,7 +80,7 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
       <div className='justificar-centro'>
         <Logo />
         <div className='contenedor-info'>
-          <span className='span'><Whatsapp /> 3233113227</span>
+          <span className='span m10'><Whatsapp /> 3233113227</span>
           <span className='span'><Address /> Manzana B Casa 5</span>
           <span className='span'>         Quito Lopez III</span>
         </div>
@@ -94,8 +94,7 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
           </div>
           <div className='contenedor-productos-seleccionados'>
             <p>
-              {producto.cantidad > 1 ? producto.categoria : producto.categoria.slice(0, -1)} {producto.nombre}
-            </p>
+            {producto.cantidad > 1 ? producto.categoria : producto.categoria.slice(0, -1)} {producto.cantidad > 1 ? producto.nombre : producto.nombre.slice(0, -1)}            </p>
           </div>
           <div className="precio">{calcularSubtotal(producto)}</div>
         </div>

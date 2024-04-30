@@ -46,8 +46,8 @@ export const Logo = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
-    width="35mm"
-    height="35mm"
+    width="25mm"
+    height="25mm"
     style={{
       shapeRendering: "geometricPrecision",
       textRendering: "geometricPrecision",
