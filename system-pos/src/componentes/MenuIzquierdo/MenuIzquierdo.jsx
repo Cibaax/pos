@@ -63,7 +63,7 @@ function MenuIzquierdo() {
           </div>
           {hoveredPedido === id && (
             <div className='justificar-extremo'>
-              <span>${valor_total}</span>
+              <span>{valor_total}</span>
               <span>{hora}</span>
             </div>
           )}
