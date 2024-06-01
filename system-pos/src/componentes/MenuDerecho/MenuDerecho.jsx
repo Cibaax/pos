@@ -78,7 +78,7 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
       <div className='justificar-centro'>
         <Logo />
         <div className='contenedor-info'>
-          <span className='span m10'><Whatsapp /> 3233113227</span>
+          <span className='span m10'><Whatsapp /> 3163035130</span>
           <span className='span'><Address /> Manzana B Casa 5</span>
           <span className='span'>         Quito Lopez III</span>
         </div>
