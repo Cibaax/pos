@@ -3,11 +3,11 @@ import { useReactToPrint } from 'react-to-print';
 import { Line, Logo, Whatsapp, Address } from '../SVG/SVG';
 import './MenuDerecho.css';
 import { calcularSubtotal, total } from '../Otros/Otros';
-import Ingredientes from '../Ingredientes/Ingredientes';
 
 
-function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos, menuDerecho }) {
+function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos, menuDerecho, recargarPedidos }) {
   const referenciarComponente = useRef();
+
   const fecha = new Date().toLocaleDateString('es-CO').replace(/\//g, '-');
   const hora = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
 
@@ -28,7 +28,6 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
         descripcion: producto.descripcion
       }))
     };
-    console.log(pedido)
     try {
       const response = await fetch('http://localhost:3001/pedidos', {
         method: 'POST',
@@ -40,12 +39,11 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
 
       if (response.status === 201) {
         const data = await response.json();
-        console.log('Pedido creado con ID:', data.id);
         imprimir();
         setLlevar(true);
         setServirse(false);
         resetearProductos();
-
+        recargarPedidos();        
       } else {
         console.error('Error en la solicitud al servidor:', response.status);
       }
@@ -132,13 +130,9 @@ function MenuDerecho({ productosSeleccionados, quitarProducto, resetearProductos
           />
         </label>
       </div>
-      {/* <div className="espacio-blanco"></div> */}
       <Line />
       <div className='justificar-centro'>
         <button onClick={imprimirResetarProducto} className="no-imprimir activo">Imprimir</button>
-      </div>
-      <div className='no-imprimir'>
-        <Ingredientes />
       </div>
     </div>
   );

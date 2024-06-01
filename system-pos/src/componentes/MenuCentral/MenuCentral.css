@@ -36,3 +36,8 @@
   flex-direction: column;
   align-items: center;
 }
+
+.inventario{
+  display: flex;
+  margin: 5px;
+}

@@ -26,7 +26,6 @@ body {
 .menu-izquierdo.activo {
   width: 20%;
   transform: translateX(0);
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .menu-central {
@@ -162,32 +161,4 @@ img{
   width: 200px;
 }
 
-
-
-/* ----------------------------------------------------------------- */
-/* MenuCentral.css */
-
-/* Agrega estilos personalizados para los checkboxes */
-.checkbox-input {
-  /* Estilos para el checkbox en sí */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border: 0.5px solid rgb(232, 229, 229);
-    border-radius: 3px; /* Bordes redondeados */
-  outline: none;
-  margin-right: 8px; /* Espacio a la derecha del checkbox */
-  cursor: pointer;
-}
-.checkbox-input:checked {
-  background-color: #66cccc; /* Fondo cuando está marcado */
-  border: none
-}
-.checkbox-input:hover {
-  background-color: #66cccc; /* Cambio de color al pasar el cursor */
-  border: 0.5px solid rgb(232, 229, 229);
-
-}
 

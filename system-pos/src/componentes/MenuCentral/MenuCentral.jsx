@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import './MenuCentral.css';
-import { valorProducto, obtenerProductos } from '../Otros/Otros';
+import { obtenerProductos, obtenerInventario } from '../Otros/Otros';
 
 function MenuCentral({ agregarProductos }) {
   const { productos } = obtenerProductos();
+  const { inventario } = obtenerInventario();
+
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Hamburguesas');
-  const categorias = [...new Set(productos.map(producto => producto.categoria))]; 
+  const categorias = [...new Set(productos.map(producto => producto.categoria))];
 
   const agregarProducto = (producto) => {
     agregarProductos({
       ...producto,
     });
-  };  
+  };
 
   return (
     <div className="menu-central-contenedor">
@@ -36,7 +38,7 @@ function MenuCentral({ agregarProductos }) {
               </div>
               <div className="text-container">
                 <h3>{producto.nombre.slice(0, -1)}</h3>
-                <p>{valorProducto(producto)}</p>
+                <p>${producto.valor}</p>
                 <button
                   className="activo"
                   onClick={() => agregarProducto(producto)}

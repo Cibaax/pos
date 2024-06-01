@@ -25,3 +25,46 @@ export function obtenerProductos() {
   }, []);  
   return { productos };
 }
+
+export function obtenerInventario() {
+  const [inventario, setInventario] = useState([]);  
+  useEffect(() => {
+    axios.get('http://localhost:3001/inventario')
+      .then(response => setInventario(response.data))
+      .catch(error => console.error('Error al obtener el inventario:', error));
+  }, []);  
+  return { inventario };
+}
+
+export async function obtenerPedidos() {
+  try {
+    const response = await axios.get('http://localhost:3001/pedidos');
+    const result = response.data;
+    const pedidos = {};
+    result.forEach(row => {
+      const pedidoId = row.pedido_id;
+      if (!pedidos[pedidoId]) {
+        const fecha = new Date(row.fecha_pedido).toISOString();
+        pedidos[pedidoId] = {
+          id: pedidoId,
+          valor_total: parseFloat(row.valor_total),
+          fecha: fecha,
+          hora: row.hora_pedido,
+          productos: []
+        };
+      }
+      pedidos[pedidoId].productos.push({
+        nombre_producto: row.nombre_producto,
+        cantidad: row.cantidad,
+        valor_unitario: parseFloat(row.valor_unitario),
+        valor_total_producto: parseFloat(row.valor_total_producto),
+        descripcion: row.descripcion
+      });
+    });
+
+    return { pedidos: Object.values(pedidos) };
+  } catch (error) {
+    console.error('Error al obtener los pedidos:', error);
+    return { pedidos: [] };
+  }
+}
